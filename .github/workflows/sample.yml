@@ -1,23 +1,39 @@
-name: Sample-workflow
+name: Manual Workflow
 
 on:
   workflow_dispatch:
-    input:
-        envinronment:
-          required: true
-          default: "eastus"
-          type: choice
-          options:
-            - westus
-            - centalus
+    inputs:
+      environment:
+        description: "Target environment"
+        required: true
+        default: "dev"
+        type: choice
+        options:
+          - dev
+          - staging
+          - production
+      log_level:
+        description: "Log level"
+        required: false
+        default: "info"
+        type: choice
+        options:
+          - debug
+          - info
+          - warning
+          - error
 
-job:
- run:
-  runs-on: ubantu-latest
-  steps:
-    -name: Checkout module repo
-     uses: actions/checkout@v4
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
 
-    - name: Run task
-      run: each " Run task"
-    
+      - name: Print inputs
+        run: |
+          echo "Environment: ${{ inputs.environment }}"
+          echo "Log level: ${{ inputs.log_level }}"
+
+      - name: Run task
+        run: echo "Running manual workflow on ${{ inputs.environment }}"
