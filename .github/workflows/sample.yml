@@ -1,0 +1,24 @@
+name: Sample-workflow
+
+on:
+  workflow_dispatch:
+    input:
+        envinronment:
+          required: true
+          default: "eastus"
+          type: choice
+          options:
+            - westus
+            - centalus
+
+job:
+  runs-on: ubantu-latest
+  steps:
+    -name: Checkout module repo
+     uses: actions/checkout@v6.0.2
+     with:
+       ref: main
+
+    - name: Run task
+      run: each " Run task"
+    
